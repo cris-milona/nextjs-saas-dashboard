@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { ArrowLeft } from "lucide-react";
 
+import { deleteUser } from "../actions";
 import { updateUserProfile } from "./actions";
 
 async function getUser(id: string) {
@@ -42,6 +43,7 @@ const UserProfilePage = async (props: PageProps<"/dashboard/users/[id]">) => {
       </div>
 
       <form
+        id="update-profile"
         action={updateUserProfile}
         className="bg-white rounded-xl border border-gray-200 p-6 space-y-6"
       >
@@ -119,15 +121,27 @@ const UserProfilePage = async (props: PageProps<"/dashboard/users/[id]">) => {
           </p>
         </div>
 
-        <div className="flex justify-end">
+      </form>
+
+      <div className="flex items-center justify-between">
+        <form action={deleteUser}>
+          <input type="hidden" name="userId" value={user.id} />
           <button
             type="submit"
-            className="px-5 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
+            aria-label={`Remove ${user.name}`}
+            className="px-5 py-2 text-sm font-medium text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition-colors"
           >
-            Save Changes
+            Remove User
           </button>
-        </div>
-      </form>
+        </form>
+        <button
+          type="submit"
+          form="update-profile"
+          className="px-5 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
+        >
+          Save Changes
+        </button>
+      </div>
     </div>
   );
 };

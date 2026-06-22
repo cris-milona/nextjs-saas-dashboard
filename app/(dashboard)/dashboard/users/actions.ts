@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function deleteUser(formData: FormData) {
   const userId = formData.get("userId") as string;
@@ -11,6 +12,6 @@ export async function deleteUser(formData: FormData) {
   // e.g. await db.users.delete({ where: { id: userId } })
   console.log(`Deleting user with id: ${userId}`);
 
-  // Tell Next.js to re-fetch the users page data
   revalidatePath("/dashboard/users");
+  redirect("/dashboard/users");
 }
