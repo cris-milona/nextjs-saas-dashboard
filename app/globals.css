@@ -25,6 +25,15 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+button,
+a,
+[role="button"],
+label[for],
+select,
+summary {
+  cursor: pointer;
+}
+
 /* Recharts renders focusable SVG elements that show a browser outline on click */
 svg:focus,
 svg:focus-visible,
