@@ -1,6 +1,6 @@
-import { auth } from "@/lib/auth"
+import { auth } from "@/lib/auth";
 
-export default auth
+export default auth;
 
 export const config = {
   matcher: [
@@ -13,4 +13,4 @@ export const config = {
      */
     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
-}
+};

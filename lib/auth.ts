@@ -1,5 +1,5 @@
-import NextAuth from "next-auth"
-import GitHub from "next-auth/providers/github"
+import NextAuth from "next-auth";
+import GitHub from "next-auth/providers/github";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
@@ -13,17 +13,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user
-      const isOnDashboard = nextUrl.pathname.startsWith("/dashboard")
+      const isLoggedIn = !!auth?.user;
+      const isOnDashboard = nextUrl.pathname.startsWith("/dashboard");
 
       if (isOnDashboard) {
-        if (isLoggedIn) return true
-        return false // redirect to login
+        if (isLoggedIn) return true;
+        return false; // redirect to login
       } else if (isLoggedIn && nextUrl.pathname === "/login") {
-        return Response.redirect(new URL("/dashboard", nextUrl))
+        return Response.redirect(new URL("/dashboard", nextUrl));
       }
 
-      return true
+      return true;
     },
   },
-})
+});

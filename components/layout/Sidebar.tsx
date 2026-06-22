@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   BarChart3,
@@ -9,18 +9,18 @@ import {
   Settings,
   LogOut,
   Zap,
-} from "lucide-react"
-import { cn } from "@/lib/utils"
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const navItems = [
   { label: "Overview", href: "/dashboard", icon: LayoutDashboard },
   { label: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
   { label: "Users", href: "/dashboard/users", icon: Users },
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
-]
+];
 
 export default function Sidebar() {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   return (
     <aside className="fixed left-0 top-0 h-screen w-64 bg-gray-900 text-white flex flex-col z-40">
@@ -35,7 +35,10 @@ export default function Sidebar() {
       {/* Nav Links */}
       <nav className="flex-1 px-3 py-4 space-y-1">
         {navItems.map(({ label, href, icon: Icon }) => {
-          const isActive = pathname === href
+          const isActive =
+            href === "/dashboard"
+              ? pathname === href
+              : pathname === href || pathname.startsWith(href + "/");
           return (
             <Link
               key={href}
@@ -50,7 +53,7 @@ export default function Sidebar() {
               <Icon className="w-5 h-5 shrink-0" />
               {label}
             </Link>
-          )
+          );
         })}
       </nav>
 
@@ -67,5 +70,5 @@ export default function Sidebar() {
         </form>
       </div>
     </aside>
-  )
+  );
 }

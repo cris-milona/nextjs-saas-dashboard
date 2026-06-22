@@ -1,24 +1,26 @@
-import { DollarSign, Users, Activity, TrendingUp } from "lucide-react"
-import StatCard from "@/components/ui/StatCard"
-import RevenueChart from "@/components/charts/RevenueChart"
-import UsersChart from "@/components/charts/UsersChart"
-import { mockStats, mockChartData } from "@/lib/mock-data"
-import { formatCurrency, formatNumber } from "@/lib/utils"
+import { DollarSign, Users, Activity, TrendingUp } from "lucide-react";
+import StatCard from "@/components/ui/StatCard";
+import RevenueChart from "@/components/charts/RevenueChart";
+import UsersChart from "@/components/charts/UsersChart";
+import { mockStats, mockChartData } from "@/lib/mock-data";
+import { formatCurrency, formatNumber } from "@/lib/utils";
 
 // This is a Server Component — data is fetched on the server, no loading spinner needed
 export default async function DashboardPage() {
   // Simulate a DB fetch delay
-  await new Promise((r) => setTimeout(r, 300))
+  await new Promise((r) => setTimeout(r, 300));
 
-  const stats = mockStats
-  const chartData = mockChartData
+  const stats = mockStats;
+  const chartData = mockChartData;
 
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div>
+      <div className="pt-2">
         <h1 className="text-2xl font-bold text-gray-900">Overview</h1>
-        <p className="text-gray-500 mt-1">Welcome back! Here&apos;s what&apos;s happening.</p>
+        <p className="text-gray-500 mt-1">
+          Welcome back! Here&apos;s what&apos;s happening.
+        </p>
       </div>
 
       {/* KPI Cards */}
@@ -55,5 +57,5 @@ export default async function DashboardPage() {
         <UsersChart data={chartData} />
       </div>
     </div>
-  )
+  );
 }

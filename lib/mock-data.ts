@@ -1,4 +1,4 @@
-import { Stats, ChartDataPoint, User } from "@/types"
+import { Stats, ChartDataPoint, User } from "@/types";
 
 export const mockStats: Stats = {
   totalRevenue: 48320,
@@ -9,7 +9,7 @@ export const mockStats: Stats = {
   usersChange: 8.2,
   activeUsersChange: -3.1,
   conversionChange: 1.2,
-}
+};
 
 export const mockChartData: ChartDataPoint[] = [
   { month: "Jan", revenue: 28000, users: 2100 },
@@ -24,17 +24,97 @@ export const mockChartData: ChartDataPoint[] = [
   { month: "Oct", revenue: 55000, users: 3800 },
   { month: "Nov", revenue: 59000, users: 4100 },
   { month: "Dec", revenue: 48320, users: 3842 },
-]
+];
 
 export const mockUsers: User[] = [
-  { id: "1", name: "Alice Johnson", email: "alice@example.com", role: "admin", status: "active", joinedAt: "2024-01-12", avatar: "AJ" },
-  { id: "2", name: "Bob Smith", email: "bob@example.com", role: "user", status: "active", joinedAt: "2024-02-08", avatar: "BS" },
-  { id: "3", name: "Carol White", email: "carol@example.com", role: "viewer", status: "inactive", joinedAt: "2024-03-15", avatar: "CW" },
-  { id: "4", name: "David Brown", email: "david@example.com", role: "user", status: "active", joinedAt: "2024-03-22", avatar: "DB" },
-  { id: "5", name: "Eva Martinez", email: "eva@example.com", role: "admin", status: "active", joinedAt: "2024-04-01", avatar: "EM" },
-  { id: "6", name: "Frank Lee", email: "frank@example.com", role: "user", status: "inactive", joinedAt: "2024-04-18", avatar: "FL" },
-  { id: "7", name: "Grace Kim", email: "grace@example.com", role: "viewer", status: "active", joinedAt: "2024-05-05", avatar: "GK" },
-  { id: "8", name: "Henry Chen", email: "henry@example.com", role: "user", status: "active", joinedAt: "2024-05-20", avatar: "HC" },
-  { id: "9", name: "Iris Patel", email: "iris@example.com", role: "user", status: "active", joinedAt: "2024-06-03", avatar: "IP" },
-  { id: "10", name: "Jake Wilson", email: "jake@example.com", role: "viewer", status: "inactive", joinedAt: "2024-06-14", avatar: "JW" },
-]
+  {
+    id: "1",
+    name: "Alice Johnson",
+    email: "alice@example.com",
+    role: "admin",
+    status: "active",
+    joinedAt: "2024-01-12",
+    avatar: "AJ",
+  },
+  {
+    id: "2",
+    name: "Bob Smith",
+    email: "bob@example.com",
+    role: "user",
+    status: "active",
+    joinedAt: "2024-02-08",
+    avatar: "BS",
+  },
+  {
+    id: "3",
+    name: "Carol White",
+    email: "carol@example.com",
+    role: "viewer",
+    status: "inactive",
+    joinedAt: "2024-03-15",
+    avatar: "CW",
+  },
+  {
+    id: "4",
+    name: "David Brown",
+    email: "david@example.com",
+    role: "user",
+    status: "active",
+    joinedAt: "2024-03-22",
+    avatar: "DB",
+  },
+  {
+    id: "5",
+    name: "Eva Martinez",
+    email: "eva@example.com",
+    role: "admin",
+    status: "active",
+    joinedAt: "2024-04-01",
+    avatar: "EM",
+  },
+  {
+    id: "6",
+    name: "Frank Lee",
+    email: "frank@example.com",
+    role: "user",
+    status: "inactive",
+    joinedAt: "2024-04-18",
+    avatar: "FL",
+  },
+  {
+    id: "7",
+    name: "Grace Kim",
+    email: "grace@example.com",
+    role: "viewer",
+    status: "active",
+    joinedAt: "2024-05-05",
+    avatar: "GK",
+  },
+  {
+    id: "8",
+    name: "Henry Chen",
+    email: "henry@example.com",
+    role: "user",
+    status: "active",
+    joinedAt: "2024-05-20",
+    avatar: "HC",
+  },
+  {
+    id: "9",
+    name: "Iris Patel",
+    email: "iris@example.com",
+    role: "user",
+    status: "active",
+    joinedAt: "2024-06-03",
+    avatar: "IP",
+  },
+  {
+    id: "10",
+    name: "Jake Wilson",
+    email: "jake@example.com",
+    role: "viewer",
+    status: "inactive",
+    joinedAt: "2024-06-14",
+    avatar: "JW",
+  },
+];

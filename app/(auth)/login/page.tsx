@@ -1,5 +1,5 @@
-import { signIn } from "@/lib/auth"
-import { Zap } from "lucide-react"
+import { signIn } from "@/lib/auth";
+import { Zap } from "lucide-react";
 
 export default function LoginPage() {
   return (
@@ -10,15 +10,19 @@ export default function LoginPage() {
           <div className="bg-indigo-500 rounded-xl p-3 mb-4">
             <Zap className="w-7 h-7 text-white" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">Welcome to Dashify</h1>
-          <p className="text-gray-500 text-sm mt-1">Sign in to access your dashboard</p>
+          <h1 className="text-2xl font-bold text-gray-900">
+            Welcome to Dashify
+          </h1>
+          <p className="text-gray-500 text-sm mt-1">
+            Sign in to access your dashboard
+          </p>
         </div>
 
         {/* GitHub Sign In */}
         <form
           action={async () => {
-            "use server"
-            await signIn("github", { redirectTo: "/dashboard" })
+            "use server";
+            await signIn("github", { redirectTo: "/dashboard" });
           }}
         >
           <button
@@ -38,5 +42,5 @@ export default function LoginPage() {
         </p>
       </div>
     </div>
-  )
+  );
 }
