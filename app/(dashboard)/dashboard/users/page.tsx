@@ -38,9 +38,12 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
           <h1 className="text-2xl font-bold text-gray-900">Users</h1>
           <p className="text-gray-500 mt-1">{meta.total} total users</p>
         </div>
-        <button className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors">
+        <Link
+          href="/dashboard/users/new"
+          className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
+        >
           + Add User
-        </button>
+        </Link>
       </div>
 
       {/* Filters */}

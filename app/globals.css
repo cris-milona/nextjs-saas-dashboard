@@ -24,3 +24,11 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Recharts renders focusable SVG elements that show a browser outline on click */
+svg:focus,
+svg:focus-visible,
+svg *:focus,
+svg *:focus-visible {
+  outline: none;
+}
