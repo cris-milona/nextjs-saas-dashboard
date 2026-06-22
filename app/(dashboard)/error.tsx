@@ -2,13 +2,13 @@
 
 import { AlertCircle } from "lucide-react";
 
-export default function DashboardError({
+const DashboardError = ({
   error,
   reset,
 }: {
   error: Error & { digest?: string };
   reset: () => void;
-}) {
+}) => {
   return (
     <div className="flex flex-col items-center justify-center h-64 gap-4">
       <div className="flex items-center gap-2 text-red-500">
@@ -24,4 +24,6 @@ export default function DashboardError({
       </button>
     </div>
   );
-}
+};
+
+export default DashboardError;

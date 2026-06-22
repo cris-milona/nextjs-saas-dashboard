@@ -14,9 +14,7 @@ async function getUser(id: string) {
   return res.json();
 }
 
-export default async function UserProfilePage(
-  props: PageProps<"/dashboard/users/[id]">
-) {
+const UserProfilePage = async (props: PageProps<"/dashboard/users/[id]">) => {
   const { id } = await props.params;
   const user = await getUser(id);
 
@@ -128,4 +126,6 @@ export default async function UserProfilePage(
       </form>
     </div>
   );
-}
+};
+
+export default UserProfilePage;

@@ -5,9 +5,9 @@ import { Search } from "lucide-react";
 
 import { auth } from "@/lib/auth";
 
-import NotificationBell from "./NotificationBell";
+import { NotificationBell } from "./NotificationBell";
 
-export default async function Topbar() {
+export const Topbar = async () => {
   const session = await auth();
   const user = session?.user;
   const initials = user?.name
@@ -60,4 +60,5 @@ export default async function Topbar() {
       </div>
     </header>
   );
-}
+};
+

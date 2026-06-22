@@ -1,13 +1,13 @@
 import { Activity, DollarSign, TrendingUp, Users } from "lucide-react";
 
-import RevenueChart from "@/components/charts/RevenueChart";
-import UsersChart from "@/components/charts/UsersChart";
-import StatCard from "@/components/ui/StatCard";
+import { RevenueChart } from "@/components/charts/RevenueChart";
+import { UsersChart } from "@/components/charts/UsersChart";
+import { StatCard } from "@/components/ui/StatCard";
 import { mockChartData, mockStats } from "@/lib/mock-data";
 import { formatCurrency, formatNumber } from "@/lib/utils";
 
 // This is a Server Component — data is fetched on the server, no loading spinner needed
-export default async function DashboardPage() {
+const DashboardPage = async () => {
   // Simulate a DB fetch delay
   await new Promise((r) => setTimeout(r, 300));
 
@@ -59,4 +59,6 @@ export default async function DashboardPage() {
       </div>
     </div>
   );
-}
+};
+
+export default DashboardPage;

@@ -1,8 +1,8 @@
-import RevenueChart from "@/components/charts/RevenueChart";
-import UsersChart from "@/components/charts/UsersChart";
+import { RevenueChart } from "@/components/charts/RevenueChart";
+import { UsersChart } from "@/components/charts/UsersChart";
 import { mockChartData } from "@/lib/mock-data";
 
-export default async function AnalyticsPage() {
+const AnalyticsPage = async () => {
   await new Promise((r) => setTimeout(r, 300));
   const data = mockChartData;
 
@@ -51,4 +51,6 @@ export default async function AnalyticsPage() {
       </div>
     </div>
   );
-}
+};
+
+export default AnalyticsPage;

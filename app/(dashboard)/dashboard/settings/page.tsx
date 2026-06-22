@@ -1,6 +1,6 @@
 import { updateSettings } from "./actions";
 
-export default function SettingsPage() {
+const SettingsPage = () => {
   return (
     <div className="space-y-6 max-w-2xl">
       <div className="pt-2">
@@ -88,4 +88,6 @@ export default function SettingsPage() {
       </form>
     </div>
   );
-}
+};
+
+export default SettingsPage;

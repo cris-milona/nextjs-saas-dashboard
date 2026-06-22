@@ -19,11 +19,11 @@ export const metadata: Metadata = {
   description: "A modern SaaS analytics dashboard built with Next.js 14",
 };
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
   return (
     <html
       lang="en"
@@ -32,4 +32,6 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
-}
+};
+
+export default RootLayout;

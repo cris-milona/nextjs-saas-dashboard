@@ -9,12 +9,7 @@ interface StatCardProps {
   icon: React.ReactNode;
 }
 
-export default function StatCard({
-  title,
-  value,
-  change,
-  icon,
-}: StatCardProps) {
+export const StatCard = ({ title, value, change, icon }: StatCardProps) => {
   const isPositive = change >= 0;
 
   return (
@@ -44,4 +39,5 @@ export default function StatCard({
       <p className="text-xs text-gray-400 mt-1">vs last month</p>
     </div>
   );
-}
+};
+

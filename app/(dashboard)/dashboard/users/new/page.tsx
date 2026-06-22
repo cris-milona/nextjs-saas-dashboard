@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react";
 
 import { addUser } from "./actions";
 
-export default function NewUserPage() {
+const NewUserPage = () => {
   return (
     <div className="space-y-6 max-w-2xl">
       <div className="pt-2">
@@ -86,4 +86,6 @@ export default function NewUserPage() {
       </form>
     </div>
   );
-}
+};
+
+export default NewUserPage;

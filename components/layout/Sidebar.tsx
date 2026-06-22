@@ -21,7 +21,7 @@ const navItems = [
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 
-export default function Sidebar() {
+export const Sidebar = () => {
   const pathname = usePathname();
 
   return (
@@ -73,4 +73,4 @@ export default function Sidebar() {
       </div>
     </aside>
   );
-}
+};

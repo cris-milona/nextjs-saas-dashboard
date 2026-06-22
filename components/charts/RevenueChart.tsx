@@ -13,7 +13,7 @@ import { ValueType } from "recharts/types/component/DefaultTooltipContent";
 
 import { ChartDataPoint } from "@/types";
 
-export default function RevenueChart({ data }: { data: ChartDataPoint[] }) {
+export const RevenueChart = ({ data }: { data: ChartDataPoint[] }) => {
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-6">
       <h3 className="text-sm font-semibold text-gray-900 mb-6">
@@ -60,4 +60,5 @@ export default function RevenueChart({ data }: { data: ChartDataPoint[] }) {
       </ResponsiveContainer>
     </div>
   );
-}
+};
+

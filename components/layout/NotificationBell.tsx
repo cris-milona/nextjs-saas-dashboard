@@ -35,7 +35,7 @@ const mockNotifications = [
   },
 ];
 
-export default function NotificationBell() {
+export const NotificationBell = () => {
   const [open, setOpen] = useState(false);
   const [notifications, setNotifications] = useState(mockNotifications);
 
@@ -119,4 +119,5 @@ export default function NotificationBell() {
       )}
     </div>
   );
-}
+};
+
