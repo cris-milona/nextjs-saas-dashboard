@@ -8,7 +8,7 @@ A full-stack analytics dashboard built with Next.js 16, demonstrating the App Ro
 
 ## Features
 
-- **Authentication** — GitHub OAuth via NextAuth.js with middleware-protected routes
+- **Authentication** — GitHub OAuth via NextAuth.js with proxy-protected routes
 - **Overview dashboard** — KPI stat cards and revenue/users charts
 - **Analytics page** — monthly breakdowns with area and bar charts (Recharts)
 - **Users table** — paginated, filterable list with role and status badges
@@ -39,7 +39,7 @@ A full-stack analytics dashboard built with Next.js 16, demonstrating the App Ro
 - **Server Components** — pages fetch data on the server with no client JS
 - **Client Components** — interactive islands (`"use client"`) only where needed
 - **Server Actions** — form submissions handled server-side without an API layer
-- **Middleware** — route protection redirecting unauthenticated users to `/login`
+- **Proxy** — route protection redirecting unauthenticated users to `/login` (Next.js 16 renamed middleware to proxy)
 - **Dynamic routes** — `/dashboard/users/[id]` with typed `PageProps<>` helper
 - **API routes** — `/api/users` and `/api/stats` with pagination and filtering
 - **Route groups** — `(auth)` and `(dashboard)` to share layouts without affecting URLs
