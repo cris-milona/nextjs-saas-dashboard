@@ -1,17 +1,30 @@
 import Link from "next/link";
 
+import { UserSearchInput } from "@/components/ui/UserSearchInput";
+import { mockUsers } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 
 import { deleteUser } from "./actions";
 
 interface UsersPageProps {
-  searchParams: Promise<{ page?: string; role?: string; status?: string }>;
+  searchParams: Promise<{
+    page?: string;
+    role?: string;
+    status?: string;
+    search?: string;
+  }>;
 }
 
-async function getUsers(page: number, role?: string, status?: string) {
+async function getUsers(
+  page: number,
+  role?: string,
+  status?: string,
+  search?: string
+) {
   const params = new URLSearchParams({ page: String(page), limit: "5" });
   if (role) params.set("role", role);
   if (status) params.set("status", status);
+  if (search) params.set("search", search);
 
   // Call our own API route — works in both dev and prod
   const res = await fetch(
@@ -22,13 +35,14 @@ async function getUsers(page: number, role?: string, status?: string) {
 }
 
 export default async function UsersPage({ searchParams }: UsersPageProps) {
-  const { page, role, status } = await searchParams;
+  const { page, role, status, search } = await searchParams;
   const currentPage = parseInt(page ?? "1");
 
   const { data: users, meta } = await getUsers(
     currentPage,
     role ?? undefined,
-    status ?? undefined
+    status ?? undefined,
+    search ?? undefined
   );
 
   return (
@@ -46,13 +60,28 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
         </Link>
       </div>
 
+      {/* Search */}
+      <UserSearchInput
+        defaultValue={search}
+        suggestions={mockUsers.map((u) => u.name)}
+      />
+
       {/* Filters */}
       <div className="flex gap-3">
         {[
-          { href: "?", label: "All" },
-          { href: "?role=admin", label: "Admins" },
-          { href: "?role=user", label: "Users" },
-          { href: "?status=inactive", label: "Inactive" },
+          { href: search ? `?search=${search}` : "?", label: "All" },
+          {
+            href: `?role=admin${search ? `&search=${search}` : ""}`,
+            label: "Admins",
+          },
+          {
+            href: `?role=user${search ? `&search=${search}` : ""}`,
+            label: "Users",
+          },
+          {
+            href: `?status=inactive${search ? `&search=${search}` : ""}`,
+            label: "Inactive",
+          },
         ].map(({ href, label }) => (
           <a
             key={label}
@@ -190,7 +219,7 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
           </p>
           <div className="flex gap-2">
             <a
-              href={`?page=${currentPage - 1}`}
+              href={`?page=${currentPage - 1}${role ? `&role=${role}` : ""}${status ? `&status=${status}` : ""}${search ? `&search=${search}` : ""}`}
               className={cn(
                 "px-3 py-1.5 text-sm rounded-lg border transition-colors",
                 currentPage <= 1
@@ -201,7 +230,7 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
               Previous
             </a>
             <a
-              href={`?page=${currentPage + 1}`}
+              href={`?page=${currentPage + 1}${role ? `&role=${role}` : ""}${status ? `&status=${status}` : ""}${search ? `&search=${search}` : ""}`}
               className={cn(
                 "px-3 py-1.5 text-sm rounded-lg border transition-colors",
                 currentPage >= meta.totalPages

@@ -13,9 +13,16 @@ export async function GET(request: NextRequest) {
   const limit = parseInt(searchParams.get("limit") ?? "5");
   const role = searchParams.get("role");
   const status = searchParams.get("status");
+  const search = searchParams.get("search")?.toLowerCase();
 
   // Filter
   let filtered = mockUsers;
+  if (search)
+    filtered = filtered.filter(
+      (u) =>
+        u.name.toLowerCase().includes(search) ||
+        u.email.toLowerCase().includes(search)
+    );
   if (role) filtered = filtered.filter((u) => u.role === role);
   if (status) filtered = filtered.filter((u) => u.status === status);
 

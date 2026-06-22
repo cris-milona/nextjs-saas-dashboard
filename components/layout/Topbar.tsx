@@ -1,8 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Search } from "lucide-react";
-
 import { auth } from "@/lib/auth";
 
 import { NotificationBell } from "./NotificationBell";
@@ -20,18 +18,7 @@ export const Topbar = async () => {
     : "?";
 
   return (
-    <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 fixed top-0 right-0 left-64 z-30">
-      {/* Search */}
-      <div className="relative w-80">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-        <input
-          type="text"
-          placeholder="Search..."
-          className="w-full pl-9 pr-4 py-2 text-sm text-gray-900 placeholder-gray-400 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-        />
-      </div>
-
-      {/* Right side */}
+    <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-end px-6 fixed top-0 right-0 left-64 z-30">
       <div className="flex items-center gap-4">
         <NotificationBell />
 
