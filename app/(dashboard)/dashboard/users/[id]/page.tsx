@@ -1,6 +1,8 @@
-import { notFound } from "next/navigation";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+
 import { ArrowLeft } from "lucide-react";
+
 import { updateUserProfile } from "./actions";
 
 async function getUser(id: string) {

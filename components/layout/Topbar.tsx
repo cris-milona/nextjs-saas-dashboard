@@ -1,7 +1,10 @@
-import Link from "next/link";
-import { Search } from "lucide-react";
-import { auth } from "@/lib/auth";
 import Image from "next/image";
+import Link from "next/link";
+
+import { Search } from "lucide-react";
+
+import { auth } from "@/lib/auth";
+
 import NotificationBell from "./NotificationBell";
 
 export default async function Topbar() {

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+
 import { mockUsers } from "@/lib/mock-data";
 
 // GET /api/users?page=1&limit=5&role=admin&status=active

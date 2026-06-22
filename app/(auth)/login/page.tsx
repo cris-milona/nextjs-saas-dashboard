@@ -1,5 +1,6 @@
-import { signIn } from "@/lib/auth";
 import { Zap } from "lucide-react";
+
+import { signIn } from "@/lib/auth";
 
 export default function LoginPage() {
   return (

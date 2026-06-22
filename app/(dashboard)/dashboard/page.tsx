@@ -1,8 +1,9 @@
-import { DollarSign, Users, Activity, TrendingUp } from "lucide-react";
-import StatCard from "@/components/ui/StatCard";
+import { Activity, DollarSign, TrendingUp, Users } from "lucide-react";
+
 import RevenueChart from "@/components/charts/RevenueChart";
 import UsersChart from "@/components/charts/UsersChart";
-import { mockStats, mockChartData } from "@/lib/mock-data";
+import StatCard from "@/components/ui/StatCard";
+import { mockChartData, mockStats } from "@/lib/mock-data";
 import { formatCurrency, formatNumber } from "@/lib/utils";
 
 // This is a Server Component — data is fetched on the server, no loading spinner needed

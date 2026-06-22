@@ -1,4 +1,4 @@
-import { Stats, ChartDataPoint, User } from "@/types";
+import { ChartDataPoint, Stats, User } from "@/types";
 
 export const mockStats: Stats = {
   totalRevenue: 48320,

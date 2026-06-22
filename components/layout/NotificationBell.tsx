@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+
 import { Bell } from "lucide-react";
 
 const mockNotifications = [
@@ -83,10 +84,7 @@ export default function NotificationBell() {
 
             <ul className="divide-y divide-gray-100 max-h-80 overflow-y-auto">
               {notifications.map((n) => (
-                <li
-                  key={n.id}
-                  className={!n.read ? "bg-indigo-50/50" : ""}
-                >
+                <li key={n.id} className={!n.read ? "bg-indigo-50/50" : ""}>
                   <button
                     type="button"
                     onClick={() => markRead(n.id)}
