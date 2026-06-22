@@ -27,10 +27,11 @@ const NewUserPage = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
               Display Name
             </label>
             <input
+              id="name"
               name="name"
               type="text"
               required
@@ -39,10 +40,11 @@ const NewUserPage = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
               Email
             </label>
             <input
+              id="email"
               name="email"
               type="email"
               required
@@ -54,10 +56,11 @@ const NewUserPage = () => {
 
         <div className="border-t border-gray-100 pt-6">
           <div className="max-w-xs">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">
               Role
             </label>
             <select
+              id="role"
               name="role"
               defaultValue="user"
               className="w-full px-3 py-2 text-sm text-gray-900 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"

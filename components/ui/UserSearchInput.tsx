@@ -53,8 +53,12 @@ export const UserSearchInput = ({
         className="relative w-80 z-20"
         onSubmit={() => setOpen(false)}
       >
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+        <Search aria-hidden="true" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+        <label htmlFor="user-search" className="sr-only">
+          Search users
+        </label>
         <input
+          id="user-search"
           type="text"
           name="search"
           value={value}

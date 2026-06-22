@@ -16,7 +16,7 @@ export const StatCard = ({ title, value, change, icon }: StatCardProps) => {
     <div className="bg-white rounded-xl border border-gray-200 p-6">
       <div className="flex items-center justify-between mb-4">
         <span className="text-sm font-medium text-gray-500">{title}</span>
-        <div className="p-2 bg-indigo-50 rounded-lg text-indigo-600">
+        <div aria-hidden="true" className="p-2 bg-indigo-50 rounded-lg text-indigo-600">
           {icon}
         </div>
       </div>
@@ -29,10 +29,11 @@ export const StatCard = ({ title, value, change, icon }: StatCardProps) => {
           )}
         >
           {isPositive ? (
-            <TrendingUp className="w-4 h-4" />
+            <TrendingUp aria-hidden="true" className="w-4 h-4" />
           ) : (
-            <TrendingDown className="w-4 h-4" />
+            <TrendingDown aria-hidden="true" className="w-4 h-4" />
           )}
+          <span className="sr-only">{isPositive ? "Up" : "Down"}</span>
           {Math.abs(change)}%
         </div>
       </div>

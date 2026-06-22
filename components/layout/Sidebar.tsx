@@ -26,11 +26,11 @@ export const Sidebar = () => {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-64 bg-gray-900 text-white flex flex-col z-40">
+    <aside aria-label="Main navigation" className="fixed left-0 top-0 h-screen w-64 bg-gray-900 text-white flex flex-col z-40">
       {/* Logo */}
       <div className="flex items-center gap-2 px-6 py-5 border-b border-gray-700">
         <div className="bg-indigo-500 rounded-lg p-1.5">
-          <Zap className="w-5 h-5 text-white" />
+          <Zap aria-hidden="true" className="w-5 h-5 text-white" />
         </div>
         <span className="text-lg font-bold tracking-tight">Dashify</span>
       </div>
@@ -46,6 +46,7 @@ export const Sidebar = () => {
             <Link
               key={href}
               href={href}
+              aria-current={isActive ? "page" : undefined}
               className={cn(
                 "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
                 isActive

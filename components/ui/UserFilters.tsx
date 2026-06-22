@@ -22,7 +22,11 @@ export const UserFilters = ({ role, status, search }: UserFiltersProps) => {
 
   return (
     <div className="flex items-center gap-3">
+      <label htmlFor="role-filter" className="sr-only">
+        Filter by role
+      </label>
       <select
+        id="role-filter"
         value={role ?? ""}
         onChange={(e) => navigate({ role: e.target.value, status })}
         className="px-3 py-1.5 text-sm text-gray-700 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -33,7 +37,11 @@ export const UserFilters = ({ role, status, search }: UserFiltersProps) => {
         <option value="viewer">Viewer</option>
       </select>
 
+      <label htmlFor="status-filter" className="sr-only">
+        Filter by status
+      </label>
       <select
+        id="status-filter"
         value={status ?? ""}
         onChange={(e) => navigate({ role, status: e.target.value })}
         className="px-3 py-1.5 text-sm text-gray-700 bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"

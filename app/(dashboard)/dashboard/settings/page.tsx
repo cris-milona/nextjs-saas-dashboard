@@ -16,10 +16,11 @@ const SettingsPage = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="displayName" className="block text-sm font-medium text-gray-700 mb-1">
               Display Name
             </label>
             <input
+              id="displayName"
               name="displayName"
               type="text"
               defaultValue="Christina"
@@ -27,10 +28,11 @@ const SettingsPage = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
               Email
             </label>
             <input
+              id="email"
               name="email"
               type="email"
               defaultValue="xr.milona@gmail.com"

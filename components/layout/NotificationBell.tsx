@@ -52,14 +52,27 @@ export const NotificationBell = () => {
   }
 
   return (
-    <div className="relative">
+    <div
+      className="relative"
+      onKeyDown={(e) => e.key === "Escape" && setOpen(false)}
+    >
       <button
         onClick={() => setOpen((o) => !o)}
+        aria-label={
+          unreadCount > 0
+            ? `Notifications, ${unreadCount} unread`
+            : "Notifications"
+        }
+        aria-expanded={open}
+        aria-haspopup="dialog"
         className="relative p-2 text-gray-500 hover:bg-gray-100 rounded-lg transition-colors"
       >
-        <Bell className="w-5 h-5" />
+        <Bell aria-hidden="true" className="w-5 h-5" />
         {unreadCount > 0 && (
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-indigo-500 rounded-full" />
+          <span
+            aria-hidden="true"
+            className="absolute top-1.5 right-1.5 w-2 h-2 bg-indigo-500 rounded-full"
+          />
         )}
       </button>
 
@@ -67,7 +80,11 @@ export const NotificationBell = () => {
         <>
           {/* Invisible backdrop — closes the dropdown when clicking outside */}
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-xl border border-gray-200 shadow-lg z-50">
+          <div
+            role="dialog"
+            aria-label="Notifications"
+            className="absolute right-0 top-full mt-2 w-80 bg-white rounded-xl border border-gray-200 shadow-lg z-50"
+          >
             <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
               <span className="text-sm font-semibold text-gray-900">
                 Notifications
@@ -92,10 +109,14 @@ export const NotificationBell = () => {
                   >
                     <div className="flex items-start gap-3">
                       <span
+                        aria-hidden="true"
                         className={`mt-1.5 w-2 h-2 rounded-full shrink-0 ${
                           n.read ? "bg-transparent" : "bg-indigo-500"
                         }`}
                       />
+                      {!n.read && (
+                        <span className="sr-only">Unread.</span>
+                      )}
                       <div className="min-w-0">
                         <p className="text-sm font-medium text-gray-900 truncate">
                           {n.title}

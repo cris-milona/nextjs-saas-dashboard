@@ -25,6 +25,7 @@ export const Topbar = async () => {
         {/* Avatar — links to profile settings */}
         <Link
           href="/dashboard/settings"
+          aria-label="Go to account settings"
           className="flex items-center gap-2 hover:opacity-80 transition-opacity"
         >
           {user?.image ? (
@@ -36,7 +37,7 @@ export const Topbar = async () => {
               className="rounded-full object-cover"
             />
           ) : (
-            <div className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white text-sm font-semibold">
+            <div aria-hidden="true" className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white text-sm font-semibold">
               {initials}
             </div>
           )}

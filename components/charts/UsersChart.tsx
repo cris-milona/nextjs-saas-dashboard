@@ -15,11 +15,14 @@ import { ChartDataPoint } from "@/types";
 
 export const UsersChart = ({ data }: { data: ChartDataPoint[] }) => {
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-6">
+    <figure className="bg-white rounded-xl border border-gray-200 p-6">
       <h3 className="text-sm font-semibold text-gray-900 mb-6">
         New Users per Month
       </h3>
-      <ResponsiveContainer width="100%" height={240}>
+      <figcaption className="sr-only">
+        Bar chart showing new users registered per month.
+      </figcaption>
+      <ResponsiveContainer aria-hidden="true" width="100%" height={240}>
         <BarChart data={data} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
           <XAxis
@@ -42,7 +45,7 @@ export const UsersChart = ({ data }: { data: ChartDataPoint[] }) => {
           <Bar dataKey="users" fill="#6366f1" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
-    </div>
+    </figure>
   );
 };
 

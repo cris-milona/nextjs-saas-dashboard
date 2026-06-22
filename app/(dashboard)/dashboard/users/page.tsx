@@ -57,7 +57,7 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
           href="/dashboard/users/new"
           className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
         >
-          + Add User
+          Add User
         </Link>
       </div>
 
@@ -75,19 +75,19 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-gray-100 bg-gray-50">
-              <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                 User
               </th>
-              <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                 Role
               </th>
-              <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                 Status
               </th>
-              <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              <th scope="col" className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                 Joined
               </th>
-              <th className="px-6 py-3" />
+              <th scope="col" className="px-6 py-3"><span className="sr-only">Actions</span></th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
@@ -145,6 +145,7 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
                       )}
                     >
                       <span
+                        aria-hidden="true"
                         className={cn(
                           "w-1.5 h-1.5 rounded-full",
                           user.status === "active"
@@ -168,6 +169,7 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
                       <input type="hidden" name="userId" value={user.id} />
                       <button
                         type="submit"
+                        aria-label={`Remove ${user.name}`}
                         className="text-xs text-gray-400 hover:text-red-500 transition-colors"
                       >
                         Remove
@@ -188,28 +190,30 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
             users
           </p>
           <div className="flex gap-2">
-            <a
-              href={`?page=${currentPage - 1}${role ? `&role=${role}` : ""}${status ? `&status=${status}` : ""}${search ? `&search=${search}` : ""}`}
-              className={cn(
-                "px-3 py-1.5 text-sm rounded-lg border transition-colors",
-                currentPage <= 1
-                  ? "text-gray-300 border-gray-100 pointer-events-none"
-                  : "text-gray-600 border-gray-200 hover:bg-gray-50"
-              )}
-            >
-              Previous
-            </a>
-            <a
-              href={`?page=${currentPage + 1}${role ? `&role=${role}` : ""}${status ? `&status=${status}` : ""}${search ? `&search=${search}` : ""}`}
-              className={cn(
-                "px-3 py-1.5 text-sm rounded-lg border transition-colors",
-                currentPage >= meta.totalPages
-                  ? "text-gray-300 border-gray-100 pointer-events-none"
-                  : "text-gray-600 border-gray-200 hover:bg-gray-50"
-              )}
-            >
-              Next
-            </a>
+            {currentPage <= 1 ? (
+              <span aria-disabled="true" className="px-3 py-1.5 text-sm rounded-lg border text-gray-300 border-gray-100">
+                Previous
+              </span>
+            ) : (
+              <a
+                href={`?page=${currentPage - 1}${role ? `&role=${role}` : ""}${status ? `&status=${status}` : ""}${search ? `&search=${search}` : ""}`}
+                className="px-3 py-1.5 text-sm rounded-lg border text-gray-600 border-gray-200 hover:bg-gray-50 transition-colors"
+              >
+                Previous
+              </a>
+            )}
+            {currentPage >= meta.totalPages ? (
+              <span aria-disabled="true" className="px-3 py-1.5 text-sm rounded-lg border text-gray-300 border-gray-100">
+                Next
+              </span>
+            ) : (
+              <a
+                href={`?page=${currentPage + 1}${role ? `&role=${role}` : ""}${status ? `&status=${status}` : ""}${search ? `&search=${search}` : ""}`}
+                className="px-3 py-1.5 text-sm rounded-lg border text-gray-600 border-gray-200 hover:bg-gray-50 transition-colors"
+              >
+                Next
+              </a>
+            )}
           </div>
         </div>
       </div>

@@ -15,11 +15,14 @@ import { ChartDataPoint } from "@/types";
 
 export const RevenueChart = ({ data }: { data: ChartDataPoint[] }) => {
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-6">
+    <figure className="bg-white rounded-xl border border-gray-200 p-6">
       <h3 className="text-sm font-semibold text-gray-900 mb-6">
         Revenue Over Time
       </h3>
-      <ResponsiveContainer width="100%" height={240}>
+      <figcaption className="sr-only">
+        Area chart showing monthly revenue over time.
+      </figcaption>
+      <ResponsiveContainer aria-hidden="true" width="100%" height={240}>
         <AreaChart
           data={data}
           margin={{ top: 4, right: 4, left: 0, bottom: 0 }}
@@ -58,7 +61,7 @@ export const RevenueChart = ({ data }: { data: ChartDataPoint[] }) => {
           />
         </AreaChart>
       </ResponsiveContainer>
-    </div>
+    </figure>
   );
 };
 
