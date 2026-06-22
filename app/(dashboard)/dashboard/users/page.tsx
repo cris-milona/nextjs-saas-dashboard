@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { UserFilters } from "@/components/ui/UserFilters";
 import { UserSearchInput } from "@/components/ui/UserSearchInput";
 import { mockUsers } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
@@ -67,38 +68,7 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
       />
 
       {/* Filters */}
-      <div className="flex gap-3">
-        {[
-          { href: search ? `?search=${search}` : "?", label: "All" },
-          {
-            href: `?role=admin${search ? `&search=${search}` : ""}`,
-            label: "Admins",
-          },
-          {
-            href: `?role=user${search ? `&search=${search}` : ""}`,
-            label: "Users",
-          },
-          {
-            href: `?status=inactive${search ? `&search=${search}` : ""}`,
-            label: "Inactive",
-          },
-        ].map(({ href, label }) => (
-          <a
-            key={label}
-            href={href}
-            className={cn(
-              "px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors",
-              role === label.toLowerCase() ||
-                (status === "inactive" && label === "Inactive") ||
-                (!role && !status && label === "All")
-                ? "bg-indigo-600 text-white border-indigo-600"
-                : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
-            )}
-          >
-            {label}
-          </a>
-        ))}
-      </div>
+      <UserFilters role={role} status={status} search={search} />
 
       {/* Table */}
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
