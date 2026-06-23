@@ -1,6 +1,6 @@
 # Dashify — SaaS Analytics Dashboard
 
-A full-stack analytics dashboard built with Next.js 16, demonstrating the App Router, Server Components, server actions, and GitHub OAuth authentication.
+A full-stack analytics dashboard built with Next.js 16, demonstrating the App Router, Server Components, server actions, and authentication with role-based access control.
 
 > Built as a learning project while exploring the Next.js App Router and modern full-stack React patterns.
 
@@ -8,11 +8,12 @@ A full-stack analytics dashboard built with Next.js 16, demonstrating the App Ro
 
 ## Features
 
-- **Authentication** — GitHub OAuth via NextAuth.js with proxy-protected routes
+- **Authentication** — GitHub OAuth + one-click demo login via NextAuth.js, with proxy-protected routes
+- **Role-based access control** — three roles (admin, user, viewer) enforced in both the UI and server actions
 - **Overview dashboard** — KPI stat cards and revenue/users charts
 - **Analytics page** — monthly breakdowns with area and bar charts (Recharts)
-- **Users table** — paginated, filterable list with role and status badges
-- **User profile** — per-user settings form with edit support
+- **Users table** — paginated, filterable, clickable rows with role and status badges
+- **User profile** — per-user settings form with edit support gated by role
 - **Add user** — form to create new users
 - **Settings** — account preferences form
 - **Notifications** — bell dropdown with read/unread state
@@ -27,10 +28,35 @@ A full-stack analytics dashboard built with Next.js 16, demonstrating the App Ro
 | Framework | [Next.js 16](https://nextjs.org) (App Router) |
 | Language | TypeScript |
 | Styling | Tailwind CSS v4 |
-| Auth | NextAuth.js v5 (GitHub OAuth) |
+| Auth | NextAuth.js v5 (GitHub OAuth + Credentials) |
 | Charts | Recharts |
 | Icons | Lucide React |
 | Formatting | Prettier + ESLint |
+
+---
+
+## Roles & Permissions
+
+Access is controlled by a `role` field stored on each user and surfaced in the NextAuth session via the `jwt` and `session` callbacks.
+
+| | Admin | User | Viewer |
+|---|:---:|:---:|:---:|
+| View user list | ✓ | ✓ | ✓ |
+| View any user's profile | ✓ | ✓ | ✓ |
+| Edit own profile (name, email) | ✓ | ✓ | ✓ |
+| Edit any user's profile | ✓ | — | — |
+| Change role / status | ✓ | — | — |
+| Delete users | ✓ | — | — |
+
+Permissions are enforced in two layers:
+- **UI** — edit fields are `disabled` and the Save button is hidden for unauthorized users
+- **Server actions** — `updateUserProfile` and `deleteUser` re-check the session role server-side before making any change, so the restrictions cannot be bypassed by crafting a direct request
+
+### Demo login
+
+The login page has a **Try Demo** button that signs in as a pre-seeded `user`-role account (`demo@dashify.dev`) with no GitHub account required. This is useful for trying the app and for seeing the non-admin permission level in action.
+
+To sign in as an admin, use **Continue with GitHub** with a GitHub account whose email matches a user with `role: "admin"` in `lib/mock-data.ts`.
 
 ---
 
@@ -74,10 +100,14 @@ GITHUB_CLIENT_SECRET=your_client_secret
 NEXT_PUBLIC_BASE_URL=http://localhost:3000
 ```
 
-Set the GitHub OAuth callback URL to:
+For the GitHub OAuth app, set the callback URL to:
 ```
 http://localhost:3000/api/auth/callback/github
 ```
+
+> **Tip:** Create a separate GitHub OAuth app for local development and another for production — GitHub OAuth apps only accept one callback URL each.
+
+The demo login (Try Demo button) works without any GitHub credentials.
 
 ### 3. Run the development server
 

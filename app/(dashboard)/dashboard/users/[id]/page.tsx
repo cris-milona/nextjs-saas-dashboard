@@ -25,7 +25,7 @@ const UserProfilePage = async (props: PageProps<"/dashboard/users/[id]">) => {
 
   if (!user) notFound();
 
-  const adminUser = isAdmin(session?.user?.email);
+  const adminUser = isAdmin(session?.user?.role);
   const isOwnProfile = session?.user?.email === user.email;
   const canEdit = adminUser || isOwnProfile;
   const canDelete = adminUser;

@@ -12,7 +12,7 @@ export async function updateUserProfile(formData: FormData) {
   const userId = formData.get("userId") as string;
   if (!userId) throw new Error("User ID is required");
 
-  const admin = isAdmin(session.user.email);
+  const admin = isAdmin(session.user.role);
 
   if (!admin) {
     const res = await fetch(

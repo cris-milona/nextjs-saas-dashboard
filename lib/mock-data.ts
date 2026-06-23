@@ -117,4 +117,13 @@ export const mockUsers: User[] = [
     joinedAt: "2024-06-14",
     avatar: "JW",
   },
+  {
+    id: "11",
+    name: "Demo User",
+    email: "demo@dashify.dev",
+    role: "user",
+    status: "active",
+    joinedAt: "2024-01-01",
+    avatar: "DU",
+  },
 ];

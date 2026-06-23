@@ -8,7 +8,7 @@ import { isAdmin } from "@/lib/utils";
 
 export async function deleteUser(formData: FormData) {
   const session = await auth();
-  if (!isAdmin(session?.user?.email)) {
+  if (!isAdmin(session?.user?.role)) {
     throw new Error("Unauthorized");
   }
 

@@ -38,7 +38,7 @@ async function getUsers(
 
 export default async function UsersPage({ searchParams }: UsersPageProps) {
   const session = await auth();
-  const canDelete = isAdmin(session?.user?.email);
+  const canDelete = isAdmin(session?.user?.role);
 
   const { page, role, status, search } = await searchParams;
   const currentPage = parseInt(page ?? "1");
