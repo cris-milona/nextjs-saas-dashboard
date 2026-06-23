@@ -3,7 +3,15 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+import { auth } from "@/lib/auth";
+import { isAdmin } from "@/lib/utils";
+
 export async function deleteUser(formData: FormData) {
+  const session = await auth();
+  if (!isAdmin(session?.user?.email)) {
+    throw new Error("Unauthorized");
+  }
+
   const userId = formData.get("userId") as string;
 
   if (!userId) throw new Error("User ID is required");

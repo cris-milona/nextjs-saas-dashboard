@@ -3,7 +3,11 @@ import { notFound } from "next/navigation";
 
 import { ArrowLeft } from "lucide-react";
 
+import { auth } from "@/lib/auth";
+import { isAdmin } from "@/lib/utils";
+
 import { deleteUser } from "../actions";
+
 import { updateUserProfile } from "./actions";
 
 async function getUser(id: string) {
@@ -16,10 +20,15 @@ async function getUser(id: string) {
 }
 
 const UserProfilePage = async (props: PageProps<"/dashboard/users/[id]">) => {
-  const { id } = await props.params;
+  const [{ id }, session] = await Promise.all([props.params, auth()]);
   const user = await getUser(id);
 
   if (!user) notFound();
+
+  const adminUser = isAdmin(session?.user?.email);
+  const isOwnProfile = session?.user?.email === user.email;
+  const canEdit = adminUser || isOwnProfile;
+  const canDelete = adminUser;
 
   return (
     <div className="space-y-6 max-w-2xl">
@@ -53,7 +62,10 @@ const UserProfilePage = async (props: PageProps<"/dashboard/users/[id]">) => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Display Name
             </label>
             <input
@@ -61,11 +73,15 @@ const UserProfilePage = async (props: PageProps<"/dashboard/users/[id]">) => {
               name="name"
               type="text"
               defaultValue={user.name}
-              className="w-full px-3 py-2 text-sm text-gray-900 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              disabled={!canEdit}
+              className="w-full px-3 py-2 text-sm text-gray-900 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed"
             />
           </div>
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Email
             </label>
             <input
@@ -73,21 +89,26 @@ const UserProfilePage = async (props: PageProps<"/dashboard/users/[id]">) => {
               name="email"
               type="email"
               defaultValue={user.email}
-              className="w-full px-3 py-2 text-sm text-gray-900 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              disabled={!canEdit}
+              className="w-full px-3 py-2 text-sm text-gray-900 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed"
             />
           </div>
         </div>
 
         <div className="border-t border-gray-100 pt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="role"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Role
             </label>
             <select
               id="role"
               name="role"
               defaultValue={user.role}
-              className="w-full px-3 py-2 text-sm text-gray-900 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
+              disabled={!adminUser}
+              className="w-full px-3 py-2 text-sm text-gray-900 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed"
             >
               <option value="admin">Admin</option>
               <option value="user">User</option>
@@ -95,14 +116,18 @@ const UserProfilePage = async (props: PageProps<"/dashboard/users/[id]">) => {
             </select>
           </div>
           <div>
-            <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
+            <label
+              htmlFor="status"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
               Status
             </label>
             <select
               id="status"
               name="status"
               defaultValue={user.status}
-              className="w-full px-3 py-2 text-sm text-gray-900 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
+              disabled={!adminUser}
+              className="w-full px-3 py-2 text-sm text-gray-900 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed"
             >
               <option value="active">Active</option>
               <option value="inactive">Inactive</option>
@@ -120,27 +145,32 @@ const UserProfilePage = async (props: PageProps<"/dashboard/users/[id]">) => {
             })}
           </p>
         </div>
-
       </form>
 
       <div className="flex items-center justify-between">
-        <form action={deleteUser}>
-          <input type="hidden" name="userId" value={user.id} />
+        {canDelete ? (
+          <form action={deleteUser}>
+            <input type="hidden" name="userId" value={user.id} />
+            <button
+              type="submit"
+              aria-label={`Remove ${user.name}`}
+              className="px-5 py-2 text-sm font-medium text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition-colors"
+            >
+              Remove User
+            </button>
+          </form>
+        ) : (
+          <div />
+        )}
+        {canEdit && (
           <button
             type="submit"
-            aria-label={`Remove ${user.name}`}
-            className="px-5 py-2 text-sm font-medium text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition-colors"
+            form="update-profile"
+            className="px-5 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
           >
-            Remove User
+            Save Changes
           </button>
-        </form>
-        <button
-          type="submit"
-          form="update-profile"
-          className="px-5 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
-        >
-          Save Changes
-        </button>
+        )}
       </div>
     </div>
   );

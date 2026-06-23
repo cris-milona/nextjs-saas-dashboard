@@ -2,8 +2,9 @@ import Link from "next/link";
 
 import { UserFilters } from "@/components/ui/UserFilters";
 import { UserSearchInput } from "@/components/ui/UserSearchInput";
+import { auth } from "@/lib/auth";
 import { mockUsers } from "@/lib/mock-data";
-import { cn } from "@/lib/utils";
+import { cn, isAdmin } from "@/lib/utils";
 
 import { deleteUser } from "./actions";
 
@@ -36,6 +37,9 @@ async function getUsers(
 }
 
 export default async function UsersPage({ searchParams }: UsersPageProps) {
+  const session = await auth();
+  const canDelete = isAdmin(session?.user?.email);
+
   const { page, role, status, search } = await searchParams;
   const currentPage = parseInt(page ?? "1");
 
@@ -118,7 +122,7 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
                 }) => (
                   <tr
                     key={user.id}
-                    className="hover:bg-gray-50 transition-colors"
+                    className="group relative hover:bg-gray-50 transition-colors cursor-pointer"
                   >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
@@ -128,7 +132,7 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
                         <div>
                           <Link
                             href={`/dashboard/users/${user.id}`}
-                            className="font-medium text-gray-900 hover:text-indigo-600 transition-colors"
+                            className="font-medium text-gray-900 group-hover:text-indigo-600 transition-colors after:absolute after:inset-0 after:content-['']"
                           >
                             {user.name}
                           </Link>
@@ -178,18 +182,19 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
                         year: "numeric",
                       })}
                     </td>
-                    {/* Delete via Server Action */}
                     <td className="px-6 py-4 text-right">
-                      <form action={deleteUser}>
-                        <input type="hidden" name="userId" value={user.id} />
-                        <button
-                          type="submit"
-                          aria-label={`Remove ${user.name}`}
-                          className="text-xs text-gray-400 hover:text-red-500 transition-colors"
-                        >
-                          Remove
-                        </button>
-                      </form>
+                      {canDelete && (
+                        <form action={deleteUser} className="relative z-[1]">
+                          <input type="hidden" name="userId" value={user.id} />
+                          <button
+                            type="submit"
+                            aria-label={`Remove ${user.name}`}
+                            className="text-xs text-gray-400 hover:text-red-500 transition-colors"
+                          >
+                            Remove
+                          </button>
+                        </form>
+                      )}
                     </td>
                   </tr>
                 )

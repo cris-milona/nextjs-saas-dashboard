@@ -17,3 +17,11 @@ export function formatNumber(value: number): string {
 export function formatPercent(value: number): string {
   return `${value > 0 ? "+" : ""}${value.toFixed(1)}%`;
 }
+
+export function isAdmin(email: string | null | undefined): boolean {
+  if (!email) return false;
+  const admins = (process.env.ADMIN_EMAILS ?? "")
+    .split(",")
+    .map((e) => e.trim().toLowerCase());
+  return admins.includes(email.toLowerCase());
+}
