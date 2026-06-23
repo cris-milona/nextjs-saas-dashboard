@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/lib/auth";
+import { paths } from "@/lib/paths";
 import { fetchUser, isAdmin } from "@/lib/utils";
 
 export async function updateUserProfile(formData: FormData) {
@@ -33,7 +34,7 @@ export async function updateUserProfile(formData: FormData) {
     ...(admin && { role, status }),
   });
 
-  revalidatePath(`/dashboard/users/${userId}`);
-  revalidatePath("/dashboard/users");
-  redirect(`/dashboard/users/${userId}?saved=true`);
+  revalidatePath(paths.user(userId));
+  revalidatePath(paths.users());
+  redirect(paths.user(userId, { saved: true }));
 }

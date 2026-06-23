@@ -1,7 +1,9 @@
 import { redirect } from "next/navigation";
 
+import { paths } from "@/lib/paths";
+
 const Home = () => {
-  redirect("/dashboard");
+  redirect(paths.home());
 };
 
 export default Home;

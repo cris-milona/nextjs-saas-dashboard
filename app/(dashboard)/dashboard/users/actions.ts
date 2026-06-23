@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/lib/auth";
+import { paths } from "@/lib/paths";
 import { isAdmin } from "@/lib/utils";
 
 export async function deleteUser(formData: FormData) {
@@ -19,6 +20,6 @@ export async function deleteUser(formData: FormData) {
   // In a real app you'd delete from the database here
   console.log(`Deleting user with id: ${userId}`);
 
-  revalidatePath("/dashboard/users");
-  redirect("/dashboard/users?saved=true");
+  revalidatePath(paths.users());
+  redirect(paths.users({ saved: true }));
 }

@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 
 import { SavedBanner } from "@/components/ui/SavedBanner";
 import { auth } from "@/lib/auth";
+import { paths } from "@/lib/paths";
 import { fetchUser, isAdmin } from "@/lib/utils";
 
 import { deleteUser } from "../actions";
@@ -31,7 +32,7 @@ const UserProfilePage = async (props: PageProps<"/dashboard/users/[id]">) => {
       <SavedBanner show={saved === "true"} message="Profile updated successfully." />
       <div className="pt-2">
         <Link
-          href="/dashboard/users"
+          href={paths.users()}
           className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-900 mb-4 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />

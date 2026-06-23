@@ -1,6 +1,7 @@
 import { Zap } from "lucide-react";
 
 import { signIn } from "@/lib/auth";
+import { paths } from "@/lib/paths";
 
 const LoginPage = () => {
   return (
@@ -24,7 +25,7 @@ const LoginPage = () => {
           <form
             action={async () => {
               "use server";
-              await signIn("github", { redirectTo: "/dashboard" });
+              await signIn("github", { redirectTo: paths.home() });
             }}
           >
             <button
@@ -49,7 +50,7 @@ const LoginPage = () => {
           <form
             action={async () => {
               "use server";
-              await signIn("credentials", { redirectTo: "/dashboard" });
+              await signIn("credentials", { redirectTo: paths.home() });
             }}
           >
             <button

@@ -3,6 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
 
 import { mockUsers } from "@/lib/mock-data";
+import { paths } from "@/lib/paths";
 
 declare module "next-auth" {
   interface Session {
@@ -28,18 +29,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   pages: {
-    signIn: "/login",
+    signIn: paths.login(),
   },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const isOnDashboard = nextUrl.pathname.startsWith("/dashboard");
+      const isOnDashboard = nextUrl.pathname.startsWith(paths.home());
 
       if (isOnDashboard) {
         if (isLoggedIn) return true;
         return false; // redirect to login
-      } else if (isLoggedIn && nextUrl.pathname === "/login") {
-        return Response.redirect(new URL("/dashboard", nextUrl));
+      } else if (isLoggedIn && nextUrl.pathname === paths.login()) {
+        return Response.redirect(new URL(paths.home(), nextUrl));
       }
 
       return true;

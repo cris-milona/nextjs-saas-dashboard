@@ -13,13 +13,14 @@ import {
 } from "lucide-react";
 
 import { handleSignOut } from "@/app/actions/auth";
+import { paths } from "@/lib/paths";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { label: "Overview", href: "/dashboard", icon: LayoutDashboard },
-  { label: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
-  { label: "Users", href: "/dashboard/users", icon: Users },
-  { label: "Settings", href: "/dashboard/settings", icon: Settings },
+  { label: "Overview", href: paths.home(), icon: LayoutDashboard },
+  { label: "Analytics", href: paths.analytics(), icon: BarChart3 },
+  { label: "Users", href: paths.users(), icon: Users },
+  { label: "Settings", href: paths.settings(), icon: Settings },
 ];
 
 export const Sidebar = () => {
@@ -39,7 +40,7 @@ export const Sidebar = () => {
       <nav className="flex-1 px-3 py-4 space-y-1">
         {navItems.map(({ label, href, icon: Icon }) => {
           const isActive =
-            href === "/dashboard"
+            href === paths.home()
               ? pathname === href
               : pathname === href || pathname.startsWith(href + "/");
           return (

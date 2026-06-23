@@ -2,6 +2,8 @@
 
 import { redirect } from "next/navigation";
 
+import { paths } from "@/lib/paths";
+
 export async function updateSettings(formData: FormData) {
   const displayName = formData.get("displayName");
   const email = formData.get("email");
@@ -19,5 +21,5 @@ export async function updateSettings(formData: FormData) {
   });
 
   // Redirect back to settings with a success indicator
-  redirect("/dashboard/settings?saved=true");
+  redirect(paths.settings({ saved: true }));
 }

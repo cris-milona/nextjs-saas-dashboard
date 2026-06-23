@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { auth } from "@/lib/auth";
+import { paths } from "@/lib/paths";
 
 import { NotificationBell } from "./NotificationBell";
 
@@ -24,7 +25,7 @@ export const Topbar = async () => {
 
         {/* Avatar — links to profile settings */}
         <Link
-          href="/dashboard/settings"
+          href={paths.settings()}
           aria-label="Go to account settings"
           className="flex items-center gap-2 hover:opacity-80 transition-opacity"
         >

@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 
 import { Search } from "lucide-react";
 
+import { paths } from "@/lib/paths";
+
 interface UserSearchInputProps {
   defaultValue?: string;
   suggestions?: string[];
@@ -33,14 +35,14 @@ export const UserSearchInput = ({
     setValue(next);
     setOpen(true);
     if (next === "") {
-      router.push("/dashboard/users");
+      router.push(paths.users());
     }
   };
 
   const handleSelect = (name: string) => {
     setValue(name);
     setOpen(false);
-    router.push(`/dashboard/users?search=${encodeURIComponent(name)}`);
+    router.push(`${paths.users()}?search=${encodeURIComponent(name)}`);
   };
 
   return (
