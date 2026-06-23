@@ -1,17 +1,31 @@
 "use server";
 
-import { redirect } from "next/navigation";
+export type SettingsState = {
+  success?: boolean;
+  errors?: { displayName?: string; email?: string };
+} | null;
 
-import { paths } from "@/lib/paths";
-
-export async function updateSettings(formData: FormData) {
-  const displayName = formData.get("displayName");
-  const email = formData.get("email");
+export async function updateSettings(
+  _prevState: SettingsState,
+  formData: FormData
+): Promise<SettingsState> {
+  const displayName = (formData.get("displayName") as string).trim();
+  const email = (formData.get("email") as string).trim();
   const emailNotifications = formData.get("emailNotifications") === "on";
   const weeklyReport = formData.get("weeklyReport") === "on";
   const alertsOnly = formData.get("alertsOnly") === "on";
 
-  // In a real app you'd save to a database here
+  const errors: NonNullable<SettingsState>["errors"] = {};
+
+  if (!displayName) errors.displayName = "Display name is required.";
+  if (!email) {
+    errors.email = "Email is required.";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errors.email = "Enter a valid email address.";
+  }
+
+  if (Object.keys(errors).length > 0) return { errors };
+
   console.log("Settings updated:", {
     displayName,
     email,
@@ -20,6 +34,5 @@ export async function updateSettings(formData: FormData) {
     alertsOnly,
   });
 
-  // Redirect back to settings with a success indicator
-  redirect(paths.settings({ saved: true }));
+  return { success: true };
 }

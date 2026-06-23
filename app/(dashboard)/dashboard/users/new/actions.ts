@@ -4,14 +4,29 @@ import { redirect } from "next/navigation";
 
 import { paths } from "@/lib/paths";
 
-export async function addUser(formData: FormData) {
-  const name = formData.get("name") as string;
-  const email = formData.get("email") as string;
+export type AddUserState = {
+  errors?: { name?: string; email?: string };
+} | null;
+
+export async function addUser(
+  _prevState: AddUserState,
+  formData: FormData
+): Promise<AddUserState> {
+  const name = (formData.get("name") as string).trim();
+  const email = (formData.get("email") as string).trim();
   const role = formData.get("role") as string;
 
-  if (!name || !email) throw new Error("Name and email are required");
+  const errors: NonNullable<AddUserState>["errors"] = {};
 
-  // In a real app you'd insert into the database here
+  if (!name) errors.name = "Name is required.";
+  if (!email) {
+    errors.email = "Email is required.";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errors.email = "Enter a valid email address.";
+  }
+
+  if (Object.keys(errors).length > 0) return { errors };
+
   console.log("Adding user:", { name, email, role });
 
   redirect(paths.users({ saved: true }));
