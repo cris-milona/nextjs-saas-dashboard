@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { ArrowLeft } from "lucide-react";
 
+import { SavedBanner } from "@/components/ui/SavedBanner";
 import { auth } from "@/lib/auth";
 import { isAdmin } from "@/lib/utils";
 
@@ -20,7 +21,11 @@ async function getUser(id: string) {
 }
 
 const UserProfilePage = async (props: PageProps<"/dashboard/users/[id]">) => {
-  const [{ id }, session] = await Promise.all([props.params, auth()]);
+  const [{ id }, { saved }, session] = await Promise.all([
+    props.params,
+    props.searchParams,
+    auth(),
+  ]);
   const user = await getUser(id);
 
   if (!user) notFound();
@@ -32,6 +37,7 @@ const UserProfilePage = async (props: PageProps<"/dashboard/users/[id]">) => {
 
   return (
     <div className="space-y-6 max-w-2xl">
+      <SavedBanner show={saved === "true"} message="Profile updated successfully." />
       <div className="pt-2">
         <Link
           href="/dashboard/users"

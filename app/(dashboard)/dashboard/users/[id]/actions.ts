@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 import { auth } from "@/lib/auth";
 import { isAdmin } from "@/lib/utils";
@@ -29,8 +30,14 @@ export async function updateUserProfile(formData: FormData) {
   const role = admin ? (formData.get("role") as string) : undefined;
   const status = admin ? (formData.get("status") as string) : undefined;
 
-  console.log("Updating user:", { userId, name, email, ...(admin && { role, status }) });
+  console.log("Updating user:", {
+    userId,
+    name,
+    email,
+    ...(admin && { role, status }),
+  });
 
   revalidatePath(`/dashboard/users/${userId}`);
   revalidatePath("/dashboard/users");
+  redirect(`/dashboard/users/${userId}?saved=true`);
 }

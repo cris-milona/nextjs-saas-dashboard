@@ -9,13 +9,6 @@ export async function updateSettings(formData: FormData) {
   const weeklyReport = formData.get("weeklyReport") === "on";
   const alertsOnly = formData.get("alertsOnly") === "on";
 
-  // console.log("Form Data:", {
-  //   displayName,
-  //   email,
-  //   emailNotifications,
-  //   weeklyReport,
-  //   alertsOnly,
-  // });
   // In a real app you'd save to a database here
   console.log("Settings updated:", {
     displayName,

@@ -12,7 +12,6 @@ declare module "next-auth" {
   }
 }
 
-
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     GitHub({
@@ -59,3 +58,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
 });
+
+// 1. types/index.ts:5 — User has role: "admin" | "user" | "viewer" as a field
+// 2. lib/auth.ts:50-51 — the jwt callback looks up the signed-in user by email from mockUsers (standing in for the DB) and pulls found?.role onto the token
+// 3. lib/auth.ts:56-57 — the session callback then copies that role onto session.user.role, making it available client-side

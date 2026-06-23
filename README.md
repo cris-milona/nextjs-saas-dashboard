@@ -1,8 +1,8 @@
 # Dashify — SaaS Analytics Dashboard
 
-A full-stack analytics dashboard built with Next.js 16, demonstrating the App Router, Server Components, server actions, and authentication with role-based access control.
+An analytics dashboard built with Next.js 16, demonstrating the App Router, Server Components, server actions, and authentication with role-based access control.
 
-> Built as a learning project while exploring the Next.js App Router and modern full-stack React patterns.
+> Built as a learning project while exploring the Next.js App Router.
 
 ---
 
@@ -23,15 +23,15 @@ A full-stack analytics dashboard built with Next.js 16, demonstrating the App Ro
 
 ## Tech Stack
 
-| | |
-|---|---|
-| Framework | [Next.js 16](https://nextjs.org) (App Router) |
-| Language | TypeScript |
-| Styling | Tailwind CSS v4 |
-| Auth | NextAuth.js v5 (GitHub OAuth + Credentials) |
-| Charts | Recharts |
-| Icons | Lucide React |
-| Formatting | Prettier + ESLint |
+|            |                                               |
+| ---------- | --------------------------------------------- |
+| Framework  | [Next.js 16](https://nextjs.org) (App Router) |
+| Language   | TypeScript                                    |
+| Styling    | Tailwind CSS v4                               |
+| Auth       | NextAuth.js v5 (GitHub OAuth + Credentials)   |
+| Charts     | Recharts                                      |
+| Icons      | Lucide React                                  |
+| Formatting | Prettier + ESLint                             |
 
 ---
 
@@ -39,16 +39,17 @@ A full-stack analytics dashboard built with Next.js 16, demonstrating the App Ro
 
 Access is controlled by a `role` field stored on each user and surfaced in the NextAuth session via the `jwt` and `session` callbacks.
 
-| | Admin | User | Viewer |
-|---|:---:|:---:|:---:|
-| View user list | ✓ | ✓ | ✓ |
-| View any user's profile | ✓ | ✓ | ✓ |
-| Edit own profile (name, email) | ✓ | ✓ | ✓ |
-| Edit any user's profile | ✓ | — | — |
-| Change role / status | ✓ | — | — |
-| Delete users | ✓ | — | — |
+|                                | Admin | User | Viewer |
+| ------------------------------ | :---: | :--: | :----: |
+| View user list                 |   ✓   |  ✓   |   ✓    |
+| View any user's profile        |   ✓   |  ✓   |   ✓    |
+| Edit own profile (name, email) |   ✓   |  ✓   |   ✓    |
+| Edit any user's profile        |   ✓   |  —   |   —    |
+| Change role / status           |   ✓   |  —   |   —    |
+| Delete users                   |   ✓   |  —   |   —    |
 
 Permissions are enforced in two layers:
+
 - **UI** — edit fields are `disabled` and the Save button is hidden for unauthorized users
 - **Server actions** — `updateUserProfile` and `deleteUser` re-check the session role server-side before making any change, so the restrictions cannot be bypassed by crafting a direct request
 
@@ -65,7 +66,7 @@ To sign in as an admin, use **Continue with GitHub** with a GitHub account whose
 - **Server Components** — pages fetch data on the server with no client JS
 - **Client Components** — interactive islands (`"use client"`) only where needed
 - **Server Actions** — form submissions handled server-side without an API layer
-- **Proxy** — route protection redirecting unauthenticated users to `/login` (Next.js 16 renamed middleware to proxy)
+- **Proxy** — route protection redirecting unauthenticated users to `/login`
 - **Dynamic routes** — `/dashboard/users/[id]` with typed `PageProps<>` helper
 - **API routes** — `/api/users` and `/api/stats` with pagination and filtering
 - **Route groups** — `(auth)` and `(dashboard)` to share layouts without affecting URLs
@@ -101,6 +102,7 @@ NEXT_PUBLIC_BASE_URL=http://localhost:3000
 ```
 
 For the GitHub OAuth app, set the callback URL to:
+
 ```
 http://localhost:3000/api/auth/callback/github
 ```

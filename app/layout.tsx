@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+//HTML title and description in the browser
 export const metadata: Metadata = {
   title: "Dashify — SaaS Analytics Dashboard",
   description: "A modern SaaS analytics dashboard built with Next.js 14",

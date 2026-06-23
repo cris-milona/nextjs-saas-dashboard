@@ -12,5 +12,5 @@ export async function addUser(formData: FormData) {
   // In a real app you'd insert into the database here
   console.log("Adding user:", { name, email, role });
 
-  redirect("/dashboard/users");
+  redirect("/dashboard/users?saved=true");
 }

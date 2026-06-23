@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { SavedBanner } from "@/components/ui/SavedBanner";
 import { UserFilters } from "@/components/ui/UserFilters";
 import { UserSearchInput } from "@/components/ui/UserSearchInput";
 import { auth } from "@/lib/auth";
@@ -14,6 +15,7 @@ interface UsersPageProps {
     role?: string;
     status?: string;
     search?: string;
+    saved?: string;
   }>;
 }
 
@@ -40,7 +42,7 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
   const session = await auth();
   const canDelete = isAdmin(session?.user?.role);
 
-  const { page, role, status, search } = await searchParams;
+  const { page, role, status, search, saved } = await searchParams;
   const currentPage = parseInt(page ?? "1");
 
   const { data: users, meta } = await getUsers(
@@ -52,6 +54,7 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
 
   return (
     <div className="space-y-6">
+      <SavedBanner show={saved === "true"} message="Changes saved successfully." />
       <div className="flex items-center justify-between">
         <div className="pt-2">
           <h1 className="text-2xl font-bold text-gray-900">Users</h1>

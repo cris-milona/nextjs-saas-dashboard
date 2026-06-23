@@ -21,5 +21,5 @@ export async function deleteUser(formData: FormData) {
   console.log(`Deleting user with id: ${userId}`);
 
   revalidatePath("/dashboard/users");
-  redirect("/dashboard/users");
+  redirect("/dashboard/users?saved=true");
 }
