@@ -5,20 +5,11 @@ import { ArrowLeft } from "lucide-react";
 
 import { SavedBanner } from "@/components/ui/SavedBanner";
 import { auth } from "@/lib/auth";
-import { isAdmin } from "@/lib/utils";
+import { fetchUser, isAdmin } from "@/lib/utils";
 
 import { deleteUser } from "../actions";
 
 import { updateUserProfile } from "./actions";
-
-async function getUser(id: string) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}/api/users/${id}`,
-    { cache: "no-store" }
-  );
-  if (!res.ok) return null;
-  return res.json();
-}
 
 const UserProfilePage = async (props: PageProps<"/dashboard/users/[id]">) => {
   const [{ id }, { saved }, session] = await Promise.all([
@@ -26,7 +17,7 @@ const UserProfilePage = async (props: PageProps<"/dashboard/users/[id]">) => {
     props.searchParams,
     auth(),
   ]);
-  const user = await getUser(id);
+  const user = await fetchUser(id);
 
   if (!user) notFound();
 

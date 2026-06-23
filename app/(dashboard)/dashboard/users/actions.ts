@@ -17,7 +17,6 @@ export async function deleteUser(formData: FormData) {
   if (!userId) throw new Error("User ID is required");
 
   // In a real app you'd delete from the database here
-  // e.g. await db.users.delete({ where: { id: userId } })
   console.log(`Deleting user with id: ${userId}`);
 
   revalidatePath("/dashboard/users");

@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/lib/auth";
-import { isAdmin } from "@/lib/utils";
+import { fetchUser, isAdmin } from "@/lib/utils";
 
 export async function updateUserProfile(formData: FormData) {
   const session = await auth();
@@ -16,12 +16,8 @@ export async function updateUserProfile(formData: FormData) {
   const admin = isAdmin(session.user.role);
 
   if (!admin) {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}/api/users/${userId}`,
-      { cache: "no-store" }
-    );
-    if (!res.ok) throw new Error("User not found");
-    const target = await res.json();
+    const target = await fetchUser(userId);
+    if (!target) throw new Error("User not found");
     if (target.email !== session.user.email) throw new Error("Unauthorized");
   }
 

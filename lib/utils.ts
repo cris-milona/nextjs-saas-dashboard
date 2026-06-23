@@ -21,3 +21,12 @@ export function formatPercent(value: number): string {
 export function isAdmin(role: string | null | undefined): boolean {
   return role === "admin";
 }
+
+export async function fetchUser(id: string) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}/api/users/${id}`,
+    { cache: "no-store" }
+  );
+  if (!res.ok) return null;
+  return res.json();
+}

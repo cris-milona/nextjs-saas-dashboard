@@ -6,6 +6,7 @@ import { UserSearchInput } from "@/components/ui/UserSearchInput";
 import { auth } from "@/lib/auth";
 import { mockUsers } from "@/lib/mock-data";
 import { cn, isAdmin } from "@/lib/utils";
+import { User } from "@/types";
 
 import { deleteUser } from "./actions";
 
@@ -30,7 +31,7 @@ async function getUsers(
   if (status) params.set("status", status);
   if (search) params.set("search", search);
 
-  // Call our own API route — works in both dev and prod
+  // Call our own API route instead of the db — works in both dev and prod
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}/api/users?${params}`,
     { cache: "no-store" }
@@ -54,7 +55,10 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
 
   return (
     <div className="space-y-6">
-      <SavedBanner show={saved === "true"} message="Changes saved successfully." />
+      <SavedBanner
+        show={saved === "true"}
+        message="Changes saved successfully."
+      />
       <div className="flex items-center justify-between">
         <div className="pt-2">
           <h1 className="text-2xl font-bold text-gray-900">Users</h1>
@@ -113,95 +117,85 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {users.map(
-                (user: {
-                  id: string;
-                  avatar: string;
-                  name: string;
-                  email: string;
-                  role: string;
-                  status: string;
-                  joinedAt: string;
-                }) => (
-                  <tr
-                    key={user.id}
-                    className="group relative hover:bg-gray-50 transition-colors cursor-pointer"
-                  >
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-semibold shrink-0">
-                          {user.avatar}
-                        </div>
-                        <div>
-                          <Link
-                            href={`/dashboard/users/${user.id}`}
-                            className="font-medium text-gray-900 group-hover:text-indigo-600 transition-colors after:absolute after:inset-0 after:content-['']"
-                          >
-                            {user.name}
-                          </Link>
-                          <p className="text-gray-400 text-xs">{user.email}</p>
-                        </div>
+              {users.map((user: User) => (
+                <tr
+                  key={user.id}
+                  className="group relative hover:bg-gray-50 transition-colors cursor-pointer"
+                >
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-semibold shrink-0">
+                        {user.avatar}
                       </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span
-                        className={cn(
-                          "px-2 py-1 rounded-md text-xs font-medium capitalize",
-                          user.role === "admin"
-                            ? "bg-purple-50 text-purple-700"
-                            : user.role === "user"
-                              ? "bg-blue-50 text-blue-700"
-                              : "bg-gray-100 text-gray-600"
-                        )}
-                      >
-                        {user.role}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span
-                        className={cn(
-                          "flex items-center gap-1.5 text-xs font-medium w-fit",
-                          user.status === "active"
-                            ? "text-green-600"
-                            : "text-gray-400"
-                        )}
-                      >
-                        <span
-                          aria-hidden="true"
-                          className={cn(
-                            "w-1.5 h-1.5 rounded-full",
-                            user.status === "active"
-                              ? "bg-green-500"
-                              : "bg-gray-300"
-                          )}
-                        />
-                        {user.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-gray-500">
-                      {new Date(user.joinedAt).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      })}
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      {canDelete && (
-                        <form action={deleteUser} className="relative z-[1]">
-                          <input type="hidden" name="userId" value={user.id} />
-                          <button
-                            type="submit"
-                            aria-label={`Remove ${user.name}`}
-                            className="text-xs text-gray-400 hover:text-red-500 transition-colors"
-                          >
-                            Remove
-                          </button>
-                        </form>
+                      <div>
+                        <Link
+                          href={`/dashboard/users/${user.id}`}
+                          className="font-medium text-gray-900 group-hover:text-indigo-600 transition-colors after:absolute after:inset-0 after:content-['']"
+                        >
+                          {user.name}
+                        </Link>
+                        <p className="text-gray-400 text-xs">{user.email}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span
+                      className={cn(
+                        "px-2 py-1 rounded-md text-xs font-medium capitalize",
+                        user.role === "admin"
+                          ? "bg-purple-50 text-purple-700"
+                          : user.role === "user"
+                            ? "bg-blue-50 text-blue-700"
+                            : "bg-gray-100 text-gray-600"
                       )}
-                    </td>
-                  </tr>
-                )
-              )}
+                    >
+                      {user.role}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span
+                      className={cn(
+                        "flex items-center gap-1.5 text-xs font-medium w-fit",
+                        user.status === "active"
+                          ? "text-green-600"
+                          : "text-gray-400"
+                      )}
+                    >
+                      <span
+                        aria-hidden="true"
+                        className={cn(
+                          "w-1.5 h-1.5 rounded-full",
+                          user.status === "active"
+                            ? "bg-green-500"
+                            : "bg-gray-300"
+                        )}
+                      />
+                      {user.status}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-gray-500">
+                    {new Date(user.joinedAt).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    {canDelete && (
+                      <form action={deleteUser} className="relative z-[1]">
+                        <input type="hidden" name="userId" value={user.id} />
+                        <button
+                          type="submit"
+                          aria-label={`Remove ${user.name}`}
+                          className="text-xs text-gray-400 hover:text-red-500 transition-colors"
+                        >
+                          Remove
+                        </button>
+                      </form>
+                    )}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
