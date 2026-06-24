@@ -13,7 +13,16 @@ declare module "next-auth" {
   }
 }
 
+const SESSION_MAX_AGE = 60 * 60 * 8; // 8 hours
+const JWT_MAX_AGE = 60 * 60; // 1 hour — refreshed on each request while session is active
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  session: {
+    maxAge: SESSION_MAX_AGE,
+  },
+  jwt: {
+    maxAge: JWT_MAX_AGE,
+  },
   providers: [
     GitHub({
       clientId: process.env.GITHUB_CLIENT_ID!,
@@ -32,6 +41,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     signIn: paths.login(),
   },
   callbacks: {
+    //runs one every request to check if the user is authorized to access the page
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const isOnDashboard = nextUrl.pathname.startsWith(paths.home());
@@ -45,6 +55,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       return true;
     },
+    //runs when the user signs in to add the role to the token
     jwt({ token, user }) {
       if (user?.email) {
         const found = mockUsers.find((u) => u.email === user.email);
@@ -52,14 +63,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
       return token;
     },
+    //runs when the session is checked to add the role to the session object
     session({ session, token }) {
+      //adding the role to the session object so that it can be accessed client-side
       session.user.role =
         (token.role as "admin" | "user" | "viewer") ?? "viewer";
       return session;
     },
   },
 });
-
-// 1. types/index.ts:5 — User has role: "admin" | "user" | "viewer" as a field
-// 2. lib/auth.ts:50-51 — the jwt callback looks up the signed-in user by email from mockUsers (standing in for the DB) and pulls found?.role onto the token
-// 3. lib/auth.ts:56-57 — the session callback then copies that role onto session.user.role, making it available client-side

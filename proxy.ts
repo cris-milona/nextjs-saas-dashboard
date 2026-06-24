@@ -1,5 +1,6 @@
 import { auth } from "@/lib/auth";
 
+//use the auth function as a proxy to protect all routes in the app
 export const proxy = auth;
 
 export const config = {
