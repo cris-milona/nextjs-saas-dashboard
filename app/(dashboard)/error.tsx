@@ -3,7 +3,6 @@
 import { AlertCircle } from "lucide-react";
 
 const DashboardError = ({
-  error,
   reset,
 }: {
   error: Error & { digest?: string };
@@ -15,7 +14,9 @@ const DashboardError = ({
         <AlertCircle aria-hidden="true" className="w-6 h-6" />
         <p className="text-lg font-semibold">Something went wrong</p>
       </div>
-      <p className="text-gray-500 text-sm">{error.message}</p>
+      <p className="text-gray-500 text-sm">
+        An unexpected error occurred. Please try again.
+      </p>
       <button
         onClick={reset}
         className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm hover:bg-indigo-700 transition-colors"

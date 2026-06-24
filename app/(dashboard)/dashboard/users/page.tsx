@@ -37,6 +37,9 @@ async function getUsers(
     `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}/api/users?${params}`,
     { cache: "no-store" }
   );
+
+  if (!res.ok) throw new Error("Failed to load users.");
+
   return res.json();
 }
 
