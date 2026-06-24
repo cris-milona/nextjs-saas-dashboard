@@ -8,7 +8,8 @@ An analytics dashboard built with Next.js 16, demonstrating the App Router, Serv
 
 ## Features
 
-- **Authentication** — GitHub OAuth + one-click demo login via NextAuth.js, with proxy-protected routes
+- **Authentication** — GitHub OAuth + one-click demo login via NextAuth.js, with proxy-protected routes, custom error pages, and inline sign-in error feedback
+- **Session & JWT expiration** — 8-hour session with a 1-hour JWT that refreshes on each request
 - **Role-based access control** — three roles (admin, user, viewer) enforced in both the UI and server actions
 - **Overview dashboard** — KPI stat cards and revenue/users charts
 - **Analytics page** — monthly breakdowns with area and bar charts (Recharts)
@@ -17,7 +18,9 @@ An analytics dashboard built with Next.js 16, demonstrating the App Router, Serv
 - **Add user** — form to create new users
 - **Settings** — account preferences form
 - **Notifications** — bell dropdown with read/unread state
-- **Responsive layout** — fixed sidebar, topbar with live session avatar
+- **Responsive layout** — fixed sidebar, top bar with live session avatar
+- **Form validation** — `useActionState` for inline field errors and pending state on all forms
+- **Path helpers** — all route strings centralised in `lib/paths.ts`
 
 ---
 
@@ -59,6 +62,19 @@ The login page has a **Try Demo** button that signs in as a pre-seeded `user`-ro
 
 To sign in as an admin, use **Continue with GitHub** with a GitHub account whose email matches a user with `role: "admin"` in `lib/mock-data.ts`.
 
+### Auth error handling
+
+- Sign-in failures (e.g. OAuth denied) redirect back to `/login?error=...` and show an inline red banner
+- Serious auth errors (configuration issues, JWT errors) redirect to `/auth-error` with a human-readable message mapped from the NextAuth error code
+- All auth errors and warnings are logged server-side via the `logger` option in `lib/auth.ts`
+
+### Session & token lifetime
+
+| Token | Duration | Behaviour |
+|---|---|---|
+| Session cookie | 8 hours | Expires after 8 hours of inactivity; user must sign in again |
+| JWT | 1 hour | Refreshed automatically on each request by the proxy while the session is active |
+
 ---
 
 ## Next.js Concepts Demonstrated
@@ -66,6 +82,7 @@ To sign in as an admin, use **Continue with GitHub** with a GitHub account whose
 - **Server Components** — pages fetch data on the server with no client JS
 - **Client Components** — interactive islands (`"use client"`) only where needed
 - **Server Actions** — form submissions handled server-side without an API layer
+- **`useActionState`** — inline form validation with per-field errors and pending state
 - **Proxy** — route protection redirecting unauthenticated users to `/login`
 - **Dynamic routes** — `/dashboard/users/[id]` with typed `PageProps<>` helper
 - **API routes** — `/api/users` and `/api/stats` with pagination and filtering
@@ -125,21 +142,30 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ```
 app/
-├── (auth)/login/          # Login page (public)
-├── (dashboard)/           # Protected layout with sidebar + topbar
+├── (auth)/
+│   ├── login/             # Login page with inline error feedback
+│   └── auth-error/        # Custom NextAuth error page
+├── (dashboard)/           # Protected layout with sidebar + top bar
 │   └── dashboard/
 │       ├── page.tsx       # Overview
 │       ├── analytics/     # Charts and metrics
 │       ├── users/         # User table, add user, user profile
 │       └── settings/      # Account settings
+├── not-found.tsx          # Global 404 page
 └── api/
     ├── users/             # GET /api/users (paginated + filtered)
     └── stats/             # GET /api/stats
 
 components/
 ├── charts/                # RevenueChart, UsersChart
-├── layout/                # Sidebar, Topbar, NotificationBell
-└── ui/                    # StatCard
+├── layout/                # Sidebar, TopBar, NotificationBell
+└── ui/                    # StatCard, SavedBanner
+
+lib/
+├── auth.ts                # NextAuth config (providers, callbacks, session/JWT expiry, logger)
+├── paths.ts               # Central route path helpers
+├── utils.ts               # cn, formatters, isAdmin, fetchUser
+└── mock-data.ts           # Seed data (replaces DB in this demo)
 ```
 
 ---

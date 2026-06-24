@@ -1,5 +1,6 @@
 export const paths = {
   login: () => "/login",
+  authError: () => "/auth-error",
   home: () => "/dashboard",
   analytics: () => "/dashboard/analytics",
   users: (opts?: { saved?: boolean }) =>

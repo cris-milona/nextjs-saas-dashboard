@@ -3,7 +3,13 @@ import { Zap } from "lucide-react";
 import { signIn } from "@/lib/auth";
 import { paths } from "@/lib/paths";
 
-const LoginPage = () => {
+const LoginPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) => {
+  const { error } = await searchParams;
+
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 w-full max-w-md p-8">
@@ -19,6 +25,12 @@ const LoginPage = () => {
             Sign in to access your dashboard
           </p>
         </div>
+
+        {error && (
+          <div className="mb-4 px-4 py-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-600">
+            Sign-in failed. Please try again.
+          </div>
+        )}
 
         <div className="space-y-3">
           {/* GitHub Sign In */}

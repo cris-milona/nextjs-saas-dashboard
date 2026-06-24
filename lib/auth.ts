@@ -39,6 +39,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ],
   pages: {
     signIn: paths.login(),
+    error: paths.authError(),
+  },
+  logger: {
+    error(error) {
+      console.error("[Auth] error:", error);
+    },
+    warn(code) {
+      console.warn("[Auth] warning:", code);
+    },
   },
   callbacks: {
     //runs one every request to check if the user is authorized to access the page
