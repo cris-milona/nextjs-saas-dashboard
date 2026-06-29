@@ -24,9 +24,3 @@ export interface ChartDataPoint {
   revenue: number;
   users: number;
 }
-
-export interface NavItem {
-  label: string;
-  href: string;
-  icon: string;
-}

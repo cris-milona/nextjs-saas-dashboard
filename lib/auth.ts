@@ -4,11 +4,12 @@ import GitHub from "next-auth/providers/github";
 
 import { mockUsers } from "@/lib/mock-data";
 import { paths } from "@/lib/paths";
+import type { User } from "@/types";
 
 declare module "next-auth" {
   interface Session {
     user: {
-      role: "admin" | "user" | "viewer";
+      role: User["role"];
     } & DefaultSession["user"];
   }
 }
@@ -75,8 +76,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     //runs when the session is checked to add the role to the session object
     session({ session, token }) {
       //adding the role to the session object so that it can be accessed client-side
-      session.user.role =
-        (token.role as "admin" | "user" | "viewer") ?? "viewer";
+      session.user.role = (token.role as User["role"]) ?? "viewer";
       return session;
     },
   },
